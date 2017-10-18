@@ -45,7 +45,9 @@ KEYCLOAK_ADMIN=tms-admin
 # tms-d-a : d-a
 # tms-r-a-r-b : r-a r-b
 # tms-wud-a : w-a u-a d-a
-# tms-wud-a-wud-b : w-a u-a d-a wud-b
+# tms-wud-a-wud-b : w-a u-a d-a w,u,d-b
+# tms-cmd-client : ping-commands
+# tms-cmd-agent : receiver_provider-commands
 
 TMS_R_A=tms-r-a
 TMS_W_A=tms-w-a
@@ -54,8 +56,8 @@ TMS_R_A_R_B_A=tms-d-a
 TMS_E=tms-r-a-r-b
 TMS_WUD_A=tms-wud-a
 TMS_WUD_A_WUD_B=tms-wud-a-wud-b
-TMS_H=tms-cmd-client
-TMS_I=tms-cmd-agent
+TMS_CMD_CLIENT=tms-cmd-client
+TMS_CMD_AGENT=tms-cmd-agent
 
 ROLE_R_A=r-a
 ROLE_W_A=w-a
@@ -140,12 +142,12 @@ ${CLI} create users -r ${KEYCLOAK_REALM} -s enabled=true -s username=${TMS_WUD_A
 ${CLI} add-roles -r ${KEYCLOAK_REALM} --uusername ${TMS_WUD_A_WUD_B} --rolename thermostat --rolename ${ROLE_W_A} --rolename ${ROLE_U_A} --rolename ${ROLE_D_A} --rolename ${ROLE_WUD_B}
 ${CLI} set-password -r ${KEYCLOAK_REALM} --username ${TMS_WUD_A_WUD_B} --new-password ${THERMOSTAT_PASSWORD}
 
-${CLI} create users -r ${KEYCLOAK_REALM} -s enabled=true -s username=${TMS_H}
-${CLI} add-roles -r ${KEYCLOAK_REALM} --uusername ${TMS_H} --rolename thermostat --rolename ${ROLE_COMMANDS_PING}
-${CLI} set-password -r ${KEYCLOAK_REALM} --username ${TMS_H} --new-password ${THERMOSTAT_PASSWORD}
+${CLI} create users -r ${KEYCLOAK_REALM} -s enabled=true -s username=${TMS_CMD_CLIENT}
+${CLI} add-roles -r ${KEYCLOAK_REALM} --uusername ${TMS_CMD_CLIENT} --rolename thermostat --rolename ${ROLE_COMMANDS_PING}
+${CLI} set-password -r ${KEYCLOAK_REALM} --username ${TMS_CMD_CLIENT} --new-password ${THERMOSTAT_PASSWORD}
 
-${CLI} create users -r ${KEYCLOAK_REALM} -s enabled=true -s username=${TMS_I}
-${CLI} add-roles -r ${KEYCLOAK_REALM} --uusername ${TMS_I} --rolename thermostat --rolename ${ROLE_COMMANDS_RECEIVER_PROVIDER}
-${CLI} set-password -r ${KEYCLOAK_REALM} --username ${TMS_I} --new-password ${THERMOSTAT_PASSWORD}
+${CLI} create users -r ${KEYCLOAK_REALM} -s enabled=true -s username=${TMS_CMD_AGENT}
+${CLI} add-roles -r ${KEYCLOAK_REALM} --uusername ${TMS_CMD_AGENT} --rolename thermostat --rolename ${ROLE_COMMANDS_RECEIVER_PROVIDER}
+${CLI} set-password -r ${KEYCLOAK_REALM} --username ${TMS_CMD_AGENT} --new-password ${THERMOSTAT_PASSWORD}
 
 keycloak/bin/jboss-cli.sh --connect command=:shutdown
